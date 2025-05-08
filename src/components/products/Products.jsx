@@ -61,6 +61,21 @@ const Products = () => {
 
    const handleTag = (e) => {
       let tag = e.target.innerHTML;
+      if (tag === "All") {
+         axios
+            .get(`${url}/recipes`, {
+               params: {
+                  limit: 8,
+                  page: 0,
+               },
+            })
+            .then((res) => {
+               setData(res.data);
+            })
+            .catch((err) => {
+               console.log(err);
+            });
+      }
       axios
          .get(`${url}/recipes/tag/${tag}`)
          .then((res) => {
@@ -76,8 +91,11 @@ const Products = () => {
          <h2 className="text-center text-3xl">Recipes</h2>
 
          <ul className="container mx-auto flex gap-1.5 overflow-auto text-nowrap no-scrollbar py-2.5 mb-8">
+            <li onClick={handleTag} className="cursor-pointer p-0.5 bg-gray-500 text-amber-50 rounded-[4px] px-2">
+               All
+            </li>
             {list?.map((l, i) => (
-               <li onClick={handleTag} key={i} className="cursor-pointer p-0.5 bg-gray-500 text-amber-50 rounded-[4px]">
+               <li onClick={handleTag} key={i} className="cursor-pointer p-0.5 bg-gray-500 text-amber-50 rounded-[4px] px-2">
                   {l}
                </li>
             ))}
@@ -102,11 +120,13 @@ const Products = () => {
             ))}
          </div>
 
-         <div className="container mx-auto my-[40px] py-2.5 grid place-items-center">
-            <button onClick={handleSeemore} className="border py-2.5 px-5 w-[200px] rounded-[4px] bg-green-600 text-amber-50 cursor-pointer">
-               See more
-            </button>
-         </div>
+         {data?.total > 8 && (
+            <div className="container mx-auto my-[40px] py-2.5 grid place-items-center">
+               <button onClick={handleSeemore} className="border py-2.5 px-5 w-[200px] rounded-[4px] bg-green-600 text-amber-50 cursor-pointer">
+                  See more
+               </button>
+            </div>
+         )}
       </div>
    );
 };
