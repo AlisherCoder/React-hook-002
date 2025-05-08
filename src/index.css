@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+   --color-primary: #dd783f;
+   --color-laylo: #f00;
+   --rounded-border: 3px;
+}
+
+@layer utilities {
+   .no-scrollbar::-webkit-scrollbar {
+      display: none;
+   }
+   .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+   }
+}
+
+.container {
+   max-width: 1280px;
+   padding-left: 16px;
+   padding-right: 16px;
+}
